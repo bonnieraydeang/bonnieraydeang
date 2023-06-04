@@ -15,3 +15,60 @@ You can click the Preview link to take a look at your changes.
         ...
     </intent-filter>
 </activity>
+fun openUrlInAdjacentWindow(url: String) {
+    Intent(Intent.ACTION_VIEW).apply {
+        data = Uri.parse(url)
+        addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
+                           Intent.FLAG_ACTIVITY_NEW_TASK)
+    }.also { intent ->
+        startActivity(intent)
+    }
+}
+<meta-data android:name="android.allow_multiple_resumed_activities" android:value="true" />
+override fun onTopResumedActivityChanged(topResumed: Boolean) {
+    if (topResumed) {
+        // Top resumed activity
+        // Can be a signal to re-acquire exclusive resources
+    } else {
+        // No longer the top resumed activity
+    }
+}val activityDisplay = activity.getDisplay()
+val windowMetrics = activity.getWindowManager().getCurrentWindowMetrics()
+val maximumWindowMetrics = activity.getWindowManager().getMaximumWindowMetrics()
+val displayManager = getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
+val displays = displayManager.getDisplays()
+val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+val activityAllowed = activityManager.isActivityStartAllowedOnDisplay(context, displayId, intent)
+val options = ActivityOptions.makeBasic()
+options.setLaunchDisplayId(targetDisplay.displayId)
+startActivity(intent, options.toBundle())
+<activity>
+    ...
+    <intent-filter>
+        <category android:name="android.intent.category.SECONDARY_HOME" />
+        ...
+    </intent-filter>
+</activity>
+val windowMetrics = context.createDisplayContext(display)
+                    .createWindowContext(WindowManager.LayoutParams.TYPE_APPLICATION, null)
+                    .getSystemService(WindowManager::class.java)
+                    .maximumWindowMetrics
+<application
+  android:name=".MyActivity"
+ <application
+  android:name=".MyActivity"
+  android:resizeableActivity=["true" | "false"] />
+  <activity
+  android:name=".MyActivity"
+  android:supportsPictureInPicture=["true" | "false"] />
+  <activity
+  android:name=".MyActivity"
+  android:configChanges="screenSize | smallestScreenSize
+      | screenLayout | orientation" />
+<activity android:name=".MyActivity">
+    <layout android:defaultHeight="500dp"
+          android:defaultWidth="600dp"
+          android:gravity="top|end|..."
+          android:minHeight="450dp"
+          android:minWidth="300dp" />
+</activity>
