@@ -72,3 +72,11 @@ val windowMetrics = context.createDisplayContext(display)
           android:minHeight="450dp"
           android:minWidth="300dp" />
 </activity>
+@Override
+public void onActionClicked(Action action) {
+    if (action.getId() == R.id.lb_control_picture_in_picture) {
+        getActivity().enterPictureInPictureMode();
+        return;
+    }
+    ...
+}
